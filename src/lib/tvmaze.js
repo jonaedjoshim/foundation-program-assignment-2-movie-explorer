@@ -42,11 +42,11 @@ function normalizeShow(show, withCast = false) {
     officialSite: show.officialSite,
     cast: withCast
       ? (show._embedded?.cast || []).slice(0, 8).map((c) => ({
-        id: c.person.id,
-        name: c.person.name,
-        character: c.character.name,
-        image: c.person.image?.medium || null,
-      }))
+          id: c.person.id,
+          name: c.person.name,
+          character: c.character.name,
+          image: c.person.image?.medium || null,
+        }))
       : [],
   }
 }
