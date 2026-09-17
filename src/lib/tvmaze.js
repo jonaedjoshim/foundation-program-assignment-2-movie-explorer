@@ -42,11 +42,11 @@ function normalizeShow(show, withCast = false) {
     officialSite: show.officialSite,
     cast: withCast
       ? (show._embedded?.cast || []).slice(0, 8).map((c) => ({
-          id: c.person.id,
-          name: c.person.name,
-          character: c.character.name,
-          image: c.person.image?.medium || null,
-        }))
+        id: c.person.id,
+        name: c.person.name,
+        character: c.character.name,
+        image: c.person.image?.medium || null,
+      }))
       : [],
   }
 }
@@ -54,4 +54,15 @@ function normalizeShow(show, withCast = false) {
 function stripHtml(html) {
   if (!html) return 'No overview available for this title yet.'
   return html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+}
+
+/** Fetch multiple pages and return the top-rated shows, sorted by rating desc. */
+export async function getTopRatedShows(limit = 24, pages = 2) {
+  const pageNumbers = Array.from({ length: pages }, (_, i) => i)
+  const results = await Promise.all(pageNumbers.map((p) => getShows(p).catch(() => [])))
+  const merged = results.flat()
+  return merged
+    .filter((show) => show.rating !== null)
+    .sort((a, b) => b.rating - a.rating)
+    .slice(0, limit)
 }

@@ -4,8 +4,7 @@ export default function Navbar() {
   const { pathname } = useLocation()
 
   const linkClass = (path) =>
-    `text-sm tracking-wide transition-colors hover:text-primary ${
-      pathname === path ? 'text-primary' : 'text-base-content/70'
+    `text-sm tracking-wide transition-colors hover:text-primary ${pathname === path ? 'text-primary' : 'text-base-content/70'
     }`
 
   return (
@@ -23,14 +22,7 @@ export default function Navbar() {
         <div className="hidden items-center gap-7 sm:flex">
           <Link to="/" className={linkClass('/')}>Home</Link>
           <Link to="/movies" className={linkClass('/movies')}>Browse</Link>
-          <a
-            href="https://www.tvmaze.com/api"
-            target="_blank"
-            rel="noreferrer"
-            className="text-sm tracking-wide text-base-content/70 hover:text-primary"
-          >
-            API Docs
-          </a>
+          <Link to="/top-rated" className={linkClass('/top-rated')}>Top Rated</Link>
         </div>
 
         <Link
